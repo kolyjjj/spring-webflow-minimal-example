@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<jsp:root xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:jsp="http://java.sun.com/JSP/Page"
+    xmlns:form="http://www.springframework.org/tags/form"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    version="2.1">
+
+    <jsp:directive.page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" />
+    <html>
+        <head>
+            <title>Valid User</title>
+        </head>
+        <body>     
+            <h2>List of Mail Items for the username ${username}</h2>
+            
+            <table cellpadding="15" border="1" style="background-color: #ffffcc;">
+                <tr>
+                    <th>From</th>
+                    <th>Subject</th>
+                    <th>Message</th>
+                </tr>
+            
+                <c:forEach var="mailItem" items="${mailItems}">
+                <tr>
+                    <td>${mailItem.from}</td>
+                    <td>${mailItem.subject}</td>
+                    <td>${mailItem.message}</td>
+                </tr>
+                <br/>                
+            </c:forEach>
+            </table>
+        </body>
+        <a href ="./homeView.htm">Home Page</a>
+    </html>
+
+</jsp:root>

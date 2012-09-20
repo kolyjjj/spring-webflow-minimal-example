@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow
+        http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+    <var name="mailItemModel" class="li.koly.MailItemModel"/>
+
+    <view-state id="homeView" model="mailItemModel" view="/jsp/homeView.jspx">
+        <transition on="viewMailItems" to="viewMailItemsAction" />
+    </view-state>
+
+    <action-state id="viewMailItemsAction">        
+        <evaluate expression="mailItemsViewService.isUserValid(mailItemModel.username)" result="flowScope.isValidUser" />
+        <transition to="checkValidUser" />
+    </action-state>
+    
+    <decision-state id="checkValidUser">
+        <if test="flowScope.isValidUser" then="getMailItems" else="invalidUserView"/>
+    </decision-state>
+
+    <action-state id="getMailItems">
+        <evaluate expression="mailItemsViewService.retriveMailItems(mailItemModel.username)" result="flowScope.mailItems" />
+        <transition to="validUserView" />
+    </action-state>
+
+    <end-state id="validUserView" view="/jsp/mailItemsView.jspx"/>
+    
+    <end-state id="invalidUserView" view="/jsp/invalidUserView.jspx" />
+    
+</flow>
